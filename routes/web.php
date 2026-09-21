@@ -2,15 +2,37 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\authController;
+use App\Http\Controllers\userController;
 
-Route::get('/', function () {
-    return view('welcome');
+
+
+
+/**login signin */
+    Route::get('/login',[authController::class,'login'])->name('login');
+    Route::get('/sign-up',[authController::class,'signin'])->name('signUP');
+    Route::post('/user-signUp',[authController::class,'signUp'])->name('user-signUp');
+    Route::post('/sign-In',[authController::class,'user_signIn'])->name('sign-In');
+    Route::get('/logout',[authController::class,'logout'])->name('logout');
+
+    Route::get('/varifyUser/{email}',[authController::class,'varifyUser'])->name('varifyUser');
+
+/**========================================================================================== */
+/**user rotes */
+Route::middleware('auth','role:user')->prefix('user')->name('user.')->group(function(){
+
+    Route::get('/',[userController::class,'quizes'])->name('home');
+
+
 });
 
 
-Route::prefix('admin')->name('admin.')->group(function(){
+/**========================================================================================== */
+/**admin rotes */
 
-    Route::get('/',[AdminController::class,'index'])->name('dashbord');
+Route::middleware('auth','role:admin')->prefix('admin')->name('admin.')->group(function(){
+
+    Route::get('/',[AdminController::class,'index'])->name('dashboard');
 
 
     Route::get('quiz-category',[AdminController::class,'category'])->name('category');
