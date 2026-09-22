@@ -38,6 +38,15 @@ class authController extends Controller
     }
 
     public function signin(){
+          if (auth()->check()) {
+
+            if (auth()->user()->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            }
+
+            return redirect()->route('home');
+        }
+        
         return view('signIn');
 
     }
