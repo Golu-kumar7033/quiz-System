@@ -14,15 +14,23 @@ class quiz_categorie extends Model
         'title',
         'slug',
     ];
-     public function quizzes()
+
+
+
+
+  public function quizzes()
     {
-        return $this->hasMany(quiz_categorie::class, 'category_id');
+        return $this->hasMany(category_quize::class, 'category_id', 'id');
     }
-     public function topic()
+
+    public function topic()
     {
         return $this->hasMany(quiz_categorie::class, 'quize_id');
 
     }
+
+
+    
 
     
       

@@ -19,10 +19,13 @@ use App\Http\Controllers\userController;
 
 /**========================================================================================== */
 /**user rotes */
-Route::middleware('auth','role:user')->prefix('user')->name('user.')->group(function(){
+/*user home page*/
+Route::get('/',[userController::class,'index'])->name('home');
 
-    Route::get('/',[userController::class,'quizes'])->name('home');
+Route::middleware('auth','role:user')->prefix('quiz')->name('quiz.')->group(function(){
 
+    Route::get('/{type}', [UserController::class, 'quizes'])
+        ->name('topic_quiz');
 
 });
 

@@ -32,7 +32,7 @@ class authController extends Controller
                 return redirect()->route('admin.dashboard');
             }
 
-            return redirect()->route('user.home');
+            return redirect()->route('home');
         }
         return view('login');
     }
@@ -62,8 +62,6 @@ class authController extends Controller
         $link=Crypt::encryptString($user->email);
         $link=url('/varifyUser/'.$link);
         Mail::to($user->email)->send(new varifyUser($link));
-
-        Session::put('user',$user);
 
         return redirect('/login')->with('success', 'Registration successful.');
     }else{
@@ -122,7 +120,7 @@ class authController extends Controller
         }
 
         if ($user->role === 'user') {
-            return redirect()->route('user.home');
+            return redirect()->route('home');
         }
 
         // Unknown/unauthorized role

@@ -10,19 +10,20 @@ class category_quize extends Model
     protected $table = "category_quizes";
 
 
-    public function quizzes()
+   /* public function quizzes()
     {
         return $this->hasMany(category_quize::class, 'category_id');
     }
-
+*/
     public function category()
     {
-        return $this->belongsTo(category_quize::class, 'category_id');
+        return $this->belongsTo(quize_category::class, 'category_id','id');
     }
 
      public function topics()
     {
         return $this->hasMany(quiz_topic::class, 'quize_id', 'id');
     }
+
 
 }

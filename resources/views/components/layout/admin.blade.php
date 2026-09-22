@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Quizer</title>
+    <title>Quiz System</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- font -->
@@ -16,8 +16,8 @@
 
 <div class="d-flex">
 
-    <!-- Sidebar -->
 
+    <!-- Sidebar -->
 
     <div class="content flex-grow-1">
 
@@ -29,6 +29,7 @@
             @yield('content')
         </main>
 
+@include('components.includes.footer')
 
     </div>
 
