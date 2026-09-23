@@ -24,7 +24,7 @@
                     <input
                     id="name"
                     type="text"
-                    class="{{($errors->first('name')?'is-invalid':'')}}"
+                    class="input  {{($errors->first('name')?'is-invalid':'')}}"
                     name="name"
                     value="{{old('name')}}"
                     placeholder="Enter your fullname"
@@ -38,7 +38,7 @@
                 <label for="email">EMAIL ADDRESS</label>
                 <input
                 id="email"
-                class="{{($errors->first('email')?'is-invalid':'')}}"
+                class="input  {{($errors->first('email')?'is-invalid':'')}}"
                 type="email"
                 name="email"
                 value="{{old('email')}}"
@@ -56,7 +56,7 @@
 
                 <input
                     type="password"
-                    class=" password {{($errors->first('password')?'is-invalid':'')}}"
+                    class=" password input {{($errors->first('password')?'is-invalid':'')}}"
                     name="password"
                     value="{{old('password')}}"
                     placeholder="Enter your password"
@@ -83,7 +83,7 @@
 
                 <input
                     type="password"
-                    class=" password {{($errors->first('Confirm_password')?'is-invalid':'')}}"
+                    class=" password input {{($errors->first('Confirm_password')?'is-invalid':'')}}"
                     name="Confirm_password"
                     placeholder="Confirm password"
                     value="{{old('Confirm_password')}}"
