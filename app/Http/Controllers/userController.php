@@ -17,6 +17,10 @@ use App\Models\quiz_topic;
 use App\Models\question;
 use App\Models\option;
 use App\Models\user;
+use App\Models\attempt;
+use App\Models\user_answer;
+
+
 
 
 
@@ -25,8 +29,10 @@ class userController extends Controller
 
 
     public function userData(){
-        $user = User::Auth();
-        Session::put('user', $user);    
+        $user = Auth::user();
+        Session::put('user', $user);  
+        return view('user_data');
+  
     }
     //index page
     public function index(){
@@ -37,7 +43,89 @@ class userController extends Controller
 
     //quizess category page
     public function quizes($type){
-        return $type;
+        $quizMcq =quiz_topic::with([ 'questions.options'])
+        ->where('slug', $type)->firstOrFail();
+        $topic_id=$quizMcq->id;
+        $user = Auth::user()->id;
+        $topic=session::put('Quiztopic',$quizMcq);
+
+        /*user attempt on topic*/
+        attempt::create([
+            'user_id'=>$user,
+            'topic_id'=>$topic_id,
+
+        ]);
+        $currentAttempt = attempt::where('user_id', $user)->latest('id')->first();
+        Session::put('attempt',$currentAttempt);
+               
+
+       return view('topic_quiz',compact('quizMcq','currentAttempt'));
+
     }
 
+    function quizsubmit(Request $request){
+
+        $attempt= Session::get('attempt');
+            if ($attempt) {
+                $attemptId = $attempt->id;
+            }
+       
+
+      try {
+            $attemptId = $attemptId ;
+            $userId    = Auth::id(); 
+
+            $allInputs = $request->all();//request all data
+             $totalScore = 0; 
+
+             foreach ($allInputs as $key => $value) {//q id 
+                if (strpos($key, 'question_') === 0) {
+                    $questionId = str_replace('question_', '', $key); 
+                    $selectedOptionId = $value;
+
+                     $isCorrect = DB::table('options')
+                    ->where('id', $selectedOptionId)
+                    ->where('is_correct', 1)
+                    ->exists();
+
+                    $scoreForThisQuestion = $isCorrect ? 1 : 0;
+                    
+                    $totalScore += $scoreForThisQuestion; 
+//databse
+                    $submit = new user_answer();
+                    $submit->attempt_id = $attemptId;
+                    $submit->user_id    = $userId;
+                    $submit->question_id  = $questionId;
+                    $submit->select_ans = $selectedOptionId; 
+                    $submit->score   = $scoreForThisQuestion; 
+                    $submit->save();
+
+                }
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Quiz submitted successfully!',
+                'score'=>$totalScore,
+            ], 200);
+
+        } catch (\Exception $e) {
+            // database error
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong: ' . $e->getMessage(),
+            ], 500);
+        }
+
+
+        return response()->json([
+            'success' => true,
+            'message' => 'quize submited',
+        ], 200);
+
+    }
+
+
+    //user profils and quiz history
 }
+
