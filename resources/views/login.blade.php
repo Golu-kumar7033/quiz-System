@@ -21,7 +21,7 @@
             id="email"
             type="email"
             name="email"
-            class=" {{($errors->first('email')?'is-invalid':'')}}"
+            class=" input {{($errors->first('email')?'is-invalid':'')}}"
 
             placeholder="Enter your email"
             required
@@ -38,7 +38,7 @@
             <input
               id="password"
               type="password"
-              class=" {{($errors->first('password')?'is-invalid':'')}}"
+              class=" input {{($errors->first('password')?'is-invalid':'')}}"
               name="password"
               placeholder="Enter your password"
               required
@@ -105,22 +105,6 @@
       }
 
     </script>
-
-    @if ($errors->has('email'))
-    <div class="error" id="error" style="display:flex; justify-content:end;">
-        <span class="text-danger">{{ $errors->first('email') }}</span>
-    </div>
-    @endif
-
-          <script>
-            setTimeout(() => {
-                const toast = document.getElementById('error');
-
-                if (toast) {
-                    toast.remove();
-                }
-            }, 3000);
-        </script>
 
   </div>
 
