@@ -27,6 +27,19 @@ Route::middleware('auth','role:user')->prefix('quiz')->name('quiz.')->group(func
     Route::get('/{type}', [UserController::class, 'quizes'])
         ->name('topic_quiz');
 
+    Route::Post('quiz-submit', [UserController::class, 'quizsubmit'])
+    ->name('quiz-submit');
+
+});
+
+Route::middleware('auth','role:user')->prefix('user')->name('user.')->group(function(){
+
+    Route::get('/profile', [UserController::class, 'userData'])
+        ->name('profile');
+
+    Route::Post('quiz-submit', [UserController::class, 'quizsubmit'])
+    ->name('quiz-submit');
+
 });
 
 
