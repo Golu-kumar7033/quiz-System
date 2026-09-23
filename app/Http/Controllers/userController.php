@@ -30,8 +30,16 @@ class userController extends Controller
 
     public function userData(){
         $user = Auth::user();
-        Session::put('user', $user);  
-        return view('user_data');
+        $id=Auth::user()->id;
+        Session::put('user', $user);
+
+        $attempts = Attempt::with('topic')
+        ->where('user_id',$id)
+        ->orderByDesc('created_at')
+        ->get();
+
+        $score=user_answer::where('user_id',$id)->select('score')->where('score', 1)->count();
+        return view('user_data',compact('user','attempts','score'));
   
     }
     //index page
@@ -127,5 +135,10 @@ class userController extends Controller
 
 
     //user profils and quiz history
+    public function review($attempt,$topic){
+        return view('history');
+
+    }
+
 }
 
