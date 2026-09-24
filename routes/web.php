@@ -29,6 +29,11 @@ Route::middleware('auth','role:user')->prefix('quiz')->name('quiz.')->group(func
 
     Route::Post('quiz-submit', [UserController::class, 'quizsubmit'])
     ->name('quiz-submit');
+//user attempt history
+    Route::get('review/{attempt}/{topic}', [UserController::class, 'review'])
+    ->name('review');
+
+
 
 });
 
@@ -39,8 +44,12 @@ Route::middleware('auth','role:user')->prefix('user')->name('user.')->group(func
 
     Route::Post('quiz-submit', [UserController::class, 'quizsubmit'])
     ->name('quiz-submit');
+    //change password
+    Route::post('/change-password',[authController::class,'passwordUpdate'])->name('change-password');
+
 
 });
+
 
 
 /**========================================================================================== */
@@ -83,6 +92,10 @@ Route::middleware('auth','role:admin')->prefix('admin')->name('admin.')->group(f
     //question details
     Route::get('question', [AdminController::class, 'viewQuestion'])
     ->name('question');
+
+     //change password
+    Route::post('/change-password',[authController::class,'passwordUpdate'])->name('change-password');
+
 
 
 
