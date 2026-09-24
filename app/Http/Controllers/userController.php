@@ -71,6 +71,8 @@ class userController extends Controller
 
     }
 
+    /**quiz submit */
+
     function quizsubmit(Request $request){
 
         $attempt= Session::get('attempt');
@@ -136,8 +138,11 @@ class userController extends Controller
 
     //user profils and quiz history
     public function review($attempt,$topic){
-        return view('history');
 
+        $quizAtquestion=quiz_topic::with([ 'questions.options'])
+        ->where('Topic', $topic)->firstOrFail();
+        $userAns=user_answer::where('attempt_id',$attempt)->get();
+        return view('history',compact('quizAtquestion','attempt','userAns'));
     }
 
 }
