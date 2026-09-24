@@ -145,5 +145,11 @@ class userController extends Controller
         return view('history',compact('quizAtquestion','attempt','userAns'));
     }
 
+    public function quizSearch($serach){//search topic quiz
+
+    }
+
+
+
 }
 
