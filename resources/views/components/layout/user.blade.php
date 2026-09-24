@@ -15,64 +15,17 @@
 <body>
 
 <div class="d-flex">
+  <div class="content flex-grow-1">
 
-<!--<style>
-    
+    <!-- Topbar -->
+    @include('components.includes.usernav')
 
-.sidebar {
-  width: 200px;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
-  background: #1e293b;
-  padding: 20px;
-  box-sizing: border-box;
-}
+    <main class="p-5 container-fluid">
 
-.sidebar h2 {
-  color: white;
-}
+        @yield('contents')
+    </main>
 
-.sidebar a {
-  display: block;
-  color: #cbd5e1;
-  text-decoration: none;
-  padding: 12px 0;
-}
-
-.sidebar a:hover {
-  color: white;
-}
-
-.content {
-  margin-left: 200px;
-}
-
-</style>
-    <!- Sidebar ->
-<div class="sidebar">
-  <h2>My App</h2>
-  <a href="#">Home</a>
-  <a href="#">Dashboard</a>
-  <a href="#">Profile</a>
-  <a href="#">Settings</a>
-  <a href="#">Logout</a>
-</div>-->
-
-
-
-    <div class="content flex-grow-1">
-
-        <!-- Topbar -->
-        @include('components.includes.usernav')
-
-        <main class="p-5">
-
-            @yield('contents')
-        </main>
-
-@include('components.includes.footer')
+    @include('components.includes.footer')
 
     </div>
 
