@@ -28,4 +28,8 @@ class quiz_topic extends Model
     {
         return $this->hasMany(question::class,'topic_id');
     }
+    public function attempts()
+    {
+        return $this->hasMany(attempt::class, 'topic_id');
+    }
 }
