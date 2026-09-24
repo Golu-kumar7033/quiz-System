@@ -11,7 +11,7 @@
 body {
     min-height: 100vh;
     align-items: center;
-    background: #181a1f;
+    background: #0b0f19;
     color: white;
 }
 
@@ -833,4 +833,372 @@ a:hover {
     padding: 2px 12px;
     border-radius: 20px;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/**=======================================user profile==========================================================*/
+
+
+:root {
+    --bg-main: #0f172a;        /* मुख्य बैकग्राउंड (Slate Dark) */
+    --bg-card: #0b1220c7;        /* प्रोफाइल और क्विज़ कार्ड का बैकग्राउंड */
+    --bg-item: #334155;        /* छोटे बॉक्सेस और क्विज़ रो का बैकग्राउंड */
+    --text-primary: #f8fafc;   /* मुख्य टेक्स्ट (सफ़ेद/हल्का ग्रे) */
+    --text-secondary: #94a3b8; /* छोटा टेक्स्ट और तारीखें (म्यूटेड ग्रे) */
+    --accent-blue: #38bdf8;    /* एडिट बटन और लिंक्स के लिए (Sky Blue) */
+    --accent-green: #4ade80;   /* क्विज़ बॉर्डर और रिव्यू बटन के लिए (Neon Green) */
+    --border-color: #334155;   /* कार्ड्स और बॉक्सेस के बॉर्डर */
+}
+
+
+/* profile */
+.profile-container {
+    background:var(--bg-main);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* profile header */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 1px solid #eaedf2;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* profile img */
+.profile-header .img {
+    width: 80px;
+    height: 80px;
+    background-color:var(--bg-card);
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-header .img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* user data*/
+.user-data h4 {
+    font-size: 1.4rem;
+    color: var(--text-primary);
+    text-transform: capitalize;
+}
+
+.profile-header span {
+    margin-left: auto;
+    color:var(--text-primary);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.profile-header button:hover {
+    background-color: #0056b3;
+}
+
+.boxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+.box-item {
+    background:var(--bg-card);
+    border: 1px solid #1f2937;
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: 1000;
+    color:var(--text-primary) ;
+}
+
+.box-item span{
+    font-size: 15px;
+}
+
+
+
+/* quiz history section */
+
+
+.quiz-history {
+    border: #070b18 solid 1px;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    max-height: 800px;
+    overflow-y: auto;  
+    
+    display: flex;
+    flex-direction: column;
+    gap: 12px; 
+}
+
+
+.quiz-history::-webkit-scrollbar {
+    width: 6px;
+}
+
+.quiz-history::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.quiz-history::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+}
+
+.quiz-history::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+.quiz-review {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: #a6bbd1;
+    border-radius: 8px;
+    border-left: 4px solid #28a745;
+}
+
+.quiz-review h6 {
+    font-size: 1rem;
+    color: #212529;
+    margin-bottom: 2px;
+}
+
+.quiz-review small {
+    color: #6c757d;
+}
+
+.quiz-review a {
+    color: #28a745;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: capitalize;
+    transition: color 0.2s;
+}
+
+.quiz-review a:hover {
+    text-decoration: underline;
+    color: #1e7e34;
+}
+
+@media (max-width: 576px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .profile-header button {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+
+/* =========================
+   change password MODAL
+========================= */
+
+.password-modal {
+    background: #111827 !important;
+    border: 1px solid #263247 !important;
+    border-radius: 18px !important;
+    overflow: hidden;
+    color: #fff;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, .55);
+}
+
+/* Header */
+.password-modal .modal-header {
+    padding: 20px 22px;
+    border-bottom: 1px solid #1f2937;
+    background: #151d2e;
+}
+
+.modal-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.modal-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+
+    background: linear-gradient(
+        135deg,
+        rgba(124, 58, 237, .25),
+        rgba(79, 70, 229, .15)
+    );
+
+    color: #a78bfa;
+    border: 1px solid rgba(139, 92, 246, .2);
+    font-size: 18px;
+}
+
+.password-modal .modal-title {
+    margin: 0;
+    color: #f8fafc;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.modal-heading p {
+    margin: 3px 0 0;
+    color: #64748b;
+    font-size: 12px;
+}
+
+/* Body */
+.password-modal .modal-body {
+    padding: 25px 22px 22px;
+}
+
+/* Label */
+.password-input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Input wrapper */
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper i {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #64748b;
+    font-size: 14px;
+    transition: .2s ease;
+}
+
+/* Input */
+
+.password-input {
+    width: 100%;
+    height: 48px;
+    padding: 0 15px 0 43px;
+
+    background: #0b1120;
+    border: 1px solid #263247;
+    border-radius: 11px;
+
+    color: #f8fafc;
+    font-size: 14px;
+    outline: none;
+
+    transition: all .2s ease;
+    box-sizing: border-box;
+}
+
+.password-input::placeholder {
+    color: #475569;
+}
+
+.password-input:hover {
+    border-color: #334155;
+}
+
+.password-input:focus {
+    border-color: #7c3aed;
+    background: #0f172a;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, .12);
+}
+
+.password-input:focus + i {
+    color: #a78bfa;
+}
+
+/* Submit */
+.password-submit {
+    width: 100%;
+    height: 47px;
+    margin-top: 20px;
+
+    border: 0;
+    border-radius: 11px;
+
+    background: linear-gradient(
+        135deg,
+        #7c3aed,
+        #4f46e5
+    );
+
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(79, 70, 229, .22);
+
+    transition: all .25s ease;
+}
+
+.password-submit i {
+    margin-right: 7px;
+}
+
+.password-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(79, 70, 229, .35);
+}
+
+.password-submit:active {
+    transform: translateY(0);
+}
+
+/* Close button */
+.password-modal .btn-close {
+    opacity: .7;
+    transition: .2s ease;
+}
+
+.password-modal .btn-close:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+
+    .password-modal {
+        margin: 12px;
+    }
+
+    .password-modal .modal-body {
+        padding: 20px 18px;
+    }
+
+    .password-modal .modal-header {
+        padding: 18px;
+    }
 }
