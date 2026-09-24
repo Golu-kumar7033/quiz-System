@@ -9,10 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Crypt;
-
-
-
-
+use Illuminate\Validation\Rules\Password;
 
 
 use  App\Models\User;
@@ -152,10 +149,28 @@ class authController extends Controller
 
 
     }
+//change password after login
+    public function passwordUpdate(Request $request){
+         $request->validate([
+            'password' =>['required', 'current_password'], 
+            'newpassword' => [
+            'required', 
+            Password::min(8)->letters()->mixedCase()->numbers()->symbols(), 
+            ],
+         ]);
 
+        $user = Auth::user();
 
+        if($user){
+            $user->update([
+                'password' => Hash::make($request->newpassword),
+            ]);
+            return back()->with('success', 'Password changed successfully.');
 
-       
-     
+        }     
+
+        return back()->with('error', 'Password changed Faild !.');
+
+    }     
 
 }
