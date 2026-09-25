@@ -61,6 +61,9 @@ Route::middleware('auth','role:admin')->prefix('admin')->name('admin.')->group(f
 
 
     Route::get('quiz-category',[AdminController::class,'category'])->name('category');
+//user manegement page
+    Route::get('users',[AdminController::class,'Users'])->name('users');
+
     //create category
     Route::post('create-category',[AdminController::class,'createCategory'])->name('create-category');
 

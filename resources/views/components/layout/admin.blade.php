@@ -18,10 +18,12 @@
 
 
     <!-- Sidebar -->
+    @include('components.includes.sidebar')
 
     <div class="content flex-grow-1">
 
         <!-- Topbar -->
+        @include('components.includes.topbar')
 
 
         <main class="p-5">
@@ -29,7 +31,6 @@
             @yield('content')
         </main>
 
-@include('components.includes.footer')
 
     </div>
 

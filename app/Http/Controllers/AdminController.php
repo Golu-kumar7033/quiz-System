@@ -12,6 +12,8 @@ use App\Models\category_quize;
 use App\Models\quiz_topic;
 use App\Models\question;
 use App\Models\option;
+use App\Models\User;
+
 
 
 
@@ -22,13 +24,16 @@ class AdminController extends Controller
     
     
     public function index(){
-        return view('admin.dashbord');
+        
+        $navdata = quiz_categorie::with('quizzes')->get(); 
+
+        return view('admin.dashbord',compact('navdata'));
     }
 
     public function category(){
-
+        $navdata = quiz_categorie::with('quizzes')->get(); 
         $data= quiz_categorie::simplePaginate(10);
-        return view('admin.quiz_category',compact('data'));
+        return view('admin.quiz_category',compact('data','navdata'));
     }
 
     //create category
@@ -61,6 +66,7 @@ class AdminController extends Controller
                 'quize'=>category_quize::class,
                 'topic'=>quiz_topic::class,
                 'question'=>question::class,
+                'user'=>User::class,
 
             ];
             //check which item type id deleted if exits in models
@@ -90,10 +96,11 @@ class AdminController extends Controller
     public function categoryQuiz($type)
     {
     $category =quiz_categorie::where('slug', $type)->firstOrFail();
+    $navdata = quiz_categorie::with('quizzes')->get(); 
 
     $quizzes =category_quize::where('category_id', $category->id)->simplePaginate(10);
 
-    return view('admin.category_Quize', compact('category', 'quizzes'));
+    return view('admin.category_Quize', compact('category', 'quizzes','navdata'));
     }
 
     function createQuize(Request $request){
@@ -119,11 +126,11 @@ class AdminController extends Controller
     public function quizTopics( $type){
 
         $quiz=category_quize::where('slug', $type)->firstOrFail();
+        $navdata = quiz_categorie::with('quizzes')->get(); 
 
         $topic =quiz_topic::where('quize_id', $quiz->id)->simplePaginate(10);
 
-   
-        return view('admin.quiz-topics',compact('quiz','topic'));
+        return view('admin.quiz-topics',compact('quiz','topic','navdata'));
 
     }
 
@@ -152,7 +159,7 @@ class AdminController extends Controller
     public function Question($slug)
     {
         $categories = category_quize::with('topics:id,quize_id,Topic,slug')->get(['id', 'title']);
-
+        $navdata= quiz_categorie::with('quizzes')->get(); 
         $topic = \App\Models\quiz_topic::where('slug', $slug)->firstOrFail();
 
         $question = question::with(['options' => function($query){
@@ -160,7 +167,7 @@ class AdminController extends Controller
         }])->where('topic_id', $topic->id)->simplePaginate(10);
 
 
-        return view('admin.question_bank', compact('categories','question','topic'));
+        return view('admin.question_bank', compact('categories','question','topic','navdata'));
     }
 
 
@@ -324,6 +331,17 @@ class AdminController extends Controller
                 ->withInput()
                 ->with('error', $e->getMessage());
         }
+    }
+
+
+    //manageusers
+    function Users(Request $request){
+        $navdata = quiz_categorie::with('quizzes')->get(); 
+
+        $users=User::simplePaginate(10);
+        return view('admin.user',compact('navdata','users'));
+
+
     }
 
 

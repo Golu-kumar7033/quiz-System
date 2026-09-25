@@ -13,24 +13,15 @@
 </head>
 
 <body>
-
-<div class="d-flex">
-  <div class="content flex-grow-1">
-
     <!-- Topbar -->
     @include('components.includes.usernav')
 
-    <main class="p-5 container-fluid">
+    <section class="p-3 ">
 
         @yield('contents')
-    </main>
+    </section>
 
     @include('components.includes.footer')
-
-    </div>
-
-</div>
-
 
 <!-- Bootstrap JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

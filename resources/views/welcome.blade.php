@@ -24,7 +24,38 @@
         </div>
     </div>
 </section>
+<style>
+.glow-badge {
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
 
+@keyframes glow {
+  from {
+    box-shadow: 0 0 5px #00ffff;
+  }
+  to {
+    box-shadow: 0 0 10px #0e5252,
+                0 0 20px #2e0631,
+                0 0 30px #00ffff;
+  }
+}
+.glow-badge {
+  animation: fadeInOut 0.5s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+
+
+</style>
 <!-quizess->
 <div class="container">
     <div class="text-center mb-5">
@@ -53,7 +84,7 @@
                                     @foreach($quiz->topics as $topic)
                                         <a href="{{ route('quiz.topic_quiz',['type'=>$topic->slug])}}" class="topic-item">
                                             <span>{{ $topic->Topic }}</span>
-                                            <span>→ {{ $topic->slug }}</span>
+                                            <h6 class="badge bg-info glow-badge text-danger">Attempt</h6>
                                         </a>
                                     @endforeach
                                 </div>

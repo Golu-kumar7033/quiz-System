@@ -18,8 +18,10 @@
 @include('components.includes.usernav')
 
 
-@yield('content')
+<section class="p-3">
+    @yield('content')
 
+</section>
 @include('components.includes.footer')
 
 
