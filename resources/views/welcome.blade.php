@@ -9,9 +9,9 @@
         <p class="hero-slogan">"Make learning fun, new every day whit Quizzes"- Find topic of choice and start playing<p>
         
         <!-- Search Bar Form -->
-        <form action="/search" method="GET" class="search-container">
+        <form action="{{route('search')}}" method="GET" class="search-container">
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" name="query" class="search-input" placeholder="Search any topic......." required>
+            <input type="search" name="query" class="search-input"  value="{{ request('query') }}" placeholder="Search any topic......." required>
             <button type="submit" class="search-btn">Search</button>
         </form>
 
@@ -63,7 +63,7 @@
     </div>
 
 <div class="modern-wrapper">
-@foreach($categories as $category)
+@forelse($categories as $category)
     <div class="modern-card">
         <div class="card-header">
             <div>
@@ -100,89 +100,15 @@
             @endif
         </div>
     </div>
-@endforeach
+    @empty
+    <div class="no-data">
+        <h5>Search Data Not Fount !</h5>
+    </div>
+@endforelse
 </div>
 
 </div>
 
 
 @endsection
- <!-- <style>
-        /* सामान्य बॉडी स्टाइलिंग */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        /* श्रेणी (Category) कंटेनर */
-        .category {
-            display: flex;
-            gap: 20px;
-            padding: 20px;
-        }
-
-        /* मुख्य आइटम कार्ड (Item Card) */
-        .item-card {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            padding: 24px;
-            width: 280px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid #eef2f5;
-            text-align: center;
-        }
-
-        /* कार्ड पर होवर (Hover) इफ़ेक्ट */
-        .item-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        }
-
-        /* आइटम का नाम (Strong टैग की स्टाइलिंग) */
-        .item-card strong {
-            display: block;
-            font-size: 1.25rem;
-            color: #2c3e50;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        /* अतिरिक्त विवरण (वैकल्पिक) */
-        .item-card p {
-            color: #7f8c8d;
-            font-size: 0.9rem;
-            margin: 0 0 16px 0;
-            line-height: 1.4;
-        }
-
-        /* बटन की स्टाइलिंग */
-        .item-btn {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.2s;
-        }
-
-        .item-btn:hover {
-            background-color: #2980b9;
-        }
-    </style>
-</head>
-<body>
-
-<div class="category">
-    <div class="item-card">
-        <strong></strong>
-        <button class="item-btn">देखें</button>
-    </div>
-</div>-->
+ 

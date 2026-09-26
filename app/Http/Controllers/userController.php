@@ -145,11 +145,34 @@ class userController extends Controller
         return view('history',compact('quizAtquestion','attempt','userAns'));
     }
 
-    public function quizSearch($serach){//search topic quiz
+   
+    public function Search(Request $request)
+    {
+        $query = $request->input('query');
 
+        $categories = quiz_categorie::with('quizzes.topics')
+            ->where('Title', 'LIKE', "%{$query}%")
+
+            ->orWhereHas('quizzes', function ($quiz) use ($query) {
+                $quiz->where('title', 'LIKE', "%{$query}%")
+
+                ->orWhereHas('topics', function ($topic) use ($query) {
+                    $topic->where('Topic', 'LIKE', "%{$query}%");
+                });
+            })
+
+            ->get();
+
+
+        return view('welcome', [
+            'categories' => $categories,
+        ]);
     }
 
 
+//search\\
 
+       
+   
 }
 

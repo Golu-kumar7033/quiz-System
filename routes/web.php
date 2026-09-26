@@ -17,6 +17,10 @@ use App\Http\Controllers\userController;
 
     Route::get('/varifyUser/{email}',[authController::class,'varifyUser'])->name('varifyUser');
 
+    //search
+    Route::get('search', [UserController::class, 'Search'])
+    ->name('search');
+
 /**========================================================================================== */
 /**user rotes */
 /*user home page*/

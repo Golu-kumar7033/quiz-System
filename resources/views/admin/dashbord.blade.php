@@ -373,7 +373,7 @@
             <h1>Quiz Dashboard</h1>
             <p>Welcome back, Admin. Here's what's happening today.</p>
         </div>
-    </header>
+  </header>
 
 
     <!-- STATISTICS -->
