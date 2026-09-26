@@ -60,9 +60,9 @@
             
            
             <li class="sidebar-item">
-                <a href="" class="sidebar-link">
+                <a href="{{route('admin.user-activity')}}" class="sidebar-link">
                     <i class="fa-solid fa-chart-line"></i>
-                    <span>Analytics</span>
+                    <span>User Activity </span>
                 </a>
             </li>
             <li class="sidebar-item">

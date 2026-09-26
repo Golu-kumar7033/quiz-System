@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 
 use Illuminate\Http\Request;
@@ -13,6 +15,10 @@ use App\Models\quiz_topic;
 use App\Models\question;
 use App\Models\option;
 use App\Models\User;
+use App\Models\attempt;
+use App\Models\activity;
+
+
 
 
 
@@ -25,9 +31,43 @@ class AdminController extends Controller
     
     public function index(){
         
-        $navdata = quiz_categorie::with('quizzes')->get(); 
+        $navdata = quiz_categorie::with('quizzes')->get();
+        $user=User::count();
+        $attempt=attempt::count();
+        $categories = quiz_categorie::count(); 
+        $quiz=category_quize::count();
+        $topic=quiz_topic::count();
+        $ques=question::count();
+        //jion
+        $table=DB::table('category_quizes')
+        ->join('quiz_categories','quiz_categories.id','=','category_quizes.category_id')
+        ->join('quiz_topics','quiz_topics.id','=','quiz_topics.quize_id')
+        ->leftjoin('questions','questions.quize_id','=','category_quizes.id')
+        ->leftjoin('attempts','attempts.topic_id','=','quiz_topics.id')
+        ->select(
+            'category_quizes.id',
+            'category_quizes.title as quiz_title',
+            'quiz_topics.Topic as topic_title',
+            'quiz_categories.Title as category',
+            DB::raw('COUNT(DISTINCT questions.id) as questions_count'),
+            DB::raw('COUNT(DISTINCT attempts.id) as attempts_count')
+           )->groupBy(
+            'category_quizes.id',
+            'category_quizes.title',
+            'quiz_topics.Topic',
+            'quiz_categories.Title'
+        )->get();
 
-        return view('admin.dashbord',compact('navdata'));
+        $activities = Activity::with('user:id,name,role')
+            ->whereIn('id', function ($query) {
+                $query->selectRaw('MAX(id)')
+                    ->from('recent_activity')
+                    ->groupBy('user_id');
+            })->get();
+
+
+        return view('admin.dashbord',compact('navdata','user','attempt','categories',
+                                            'ques','quiz','topic','table','activities'));
     }
 
     public function category(){
@@ -48,6 +88,11 @@ class AdminController extends Controller
         $category->Title=$request->category;
         $category->slug= Str::slug($request->category);
         if($category->save()){
+            activity::create([
+                'user_id'=>Auth::id(),
+                'activity_type' => "Create {$request->category} Quiz category ",
+
+            ]);
             return redirect()->back()->with('success', 'Category saved successfully!');
         }else{
             return redirect()->back()->with('success', 'Somthing wrong!');
@@ -67,6 +112,7 @@ class AdminController extends Controller
                 'topic'=>quiz_topic::class,
                 'question'=>question::class,
                 'user'=>User::class,
+                'log'=>activity::class,
 
             ];
             //check which item type id deleted if exits in models
@@ -77,6 +123,11 @@ class AdminController extends Controller
             $model=$models[$type];
             $item=$model::findOrFail($id);
             $item->delete();
+            activity::create([
+                'user_id'=>Auth::id(),
+                'activity_type' => "Delete {$type}  ",
+
+            ]);
             return redirect()->back()->with('success', ucfirst($type) . ' item deleted successfully.');
 
         }catch (\Exception $e) {
@@ -103,6 +154,7 @@ class AdminController extends Controller
     return view('admin.category_Quize', compact('category', 'quizzes','navdata'));
     }
 
+    //create category quiz
     function createQuize(Request $request){
 
         $request->validate([
@@ -115,6 +167,11 @@ class AdminController extends Controller
         $quiz->title=$request->quiz;
         $quiz->slug= Str::slug($request->quiz);
         if($quiz->save()){
+            activity::create([
+                'user_id'=>Auth::id(),
+                'activity_type' => "Create {$request->quiz}  Quiz ",
+
+            ]);
             return redirect()->back()->with('success', 'quiz saved successfully!');
         }else{
             return redirect()->back()->with('success', 'Somthing wrong!');
@@ -147,6 +204,11 @@ class AdminController extends Controller
         $topic->Topic=$request->topic;
         $topic->slug= Str::slug($request->topic);
         if($topic->save()){
+            activity::create([
+                'user_id'=>Auth::id(),
+                'activity_type' => "Create  Quiz Topic {$request->topic} ",
+
+            ]);
             return redirect()->back()->with('success', 'quiz saved successfully!');
         }else{
             return redirect()->back()->with('success', 'Somthing wrong!');
@@ -230,6 +292,11 @@ class AdminController extends Controller
             }
 
         });
+        activity::create([
+                'user_id'=>Auth::id(),
+                'activity_type' => "Create  Topic Question  ",
+
+            ]);
 
         return back()->with('success', 'Question added successfully.');
   
@@ -322,6 +389,11 @@ class AdminController extends Controller
                     }
                 }
             });
+            activity::create([
+                'user_id'=>Auth::id(),
+                'activity_type' => "Edit topic question ",
+
+            ]);
 
             return back()->with('success', 'Question Updated successfully.');
 
@@ -344,6 +416,12 @@ class AdminController extends Controller
 
     }
 
+    //user activity
+    public function Activity(){
+        $navdata = quiz_categorie::with('quizzes')->get(); 
+        $activities = Activity::with('user:id,name,role')->get();
+        return view('admin.user_log',compact('activities','navdata'));
+    }
 
     
 }
