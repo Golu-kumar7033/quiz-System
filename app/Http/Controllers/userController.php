@@ -18,6 +18,7 @@ use App\Models\question;
 use App\Models\option;
 use App\Models\user;
 use App\Models\attempt;
+use App\Models\activity;
 use App\Models\user_answer;
 
 
@@ -63,6 +64,12 @@ class userController extends Controller
             'topic_id'=>$topic_id,
 
         ]);
+        //atempt log
+        activity::create([
+                'user_id'=>Auth::id(),
+                'activity_type' => "Attempt {$type} Quiz",
+
+            ]);
         $currentAttempt = attempt::where('user_id', $user)->latest('id')->first();
         Session::put('attempt',$currentAttempt);
                
@@ -109,6 +116,13 @@ class userController extends Controller
                     $submit->select_ans = $selectedOptionId; 
                     $submit->score   = $scoreForThisQuestion; 
                     $submit->save();
+                        //log
+                     activity::create([
+                        'user_id'=>Auth::id(),
+                        'activity_type' => " Question Submit ",
+
+                    ]);
+                    
 
                 }
             }
@@ -142,6 +156,13 @@ class userController extends Controller
         $quizAtquestion=quiz_topic::with([ 'questions.options'])
         ->where('Topic', $topic)->firstOrFail();
         $userAns=user_answer::where('attempt_id',$attempt)->get();
+
+         activity::create([
+            'user_id'=>Auth::id(),
+            'activity_type' => "Review Attempted Questions",
+
+        ]);
+        
         return view('history',compact('quizAtquestion','attempt','userAns'));
     }
 
@@ -163,6 +184,13 @@ class userController extends Controller
 
             ->get();
 
+
+            activity::create([
+                        'user_id'=>Auth::id(),
+                        'activity_type' => "Search quiz { $query} ",
+
+                    ]);
+                    
 
         return view('welcome', [
             'categories' => $categories,
