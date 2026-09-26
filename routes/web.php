@@ -103,6 +103,8 @@ Route::middleware('auth','role:admin')->prefix('admin')->name('admin.')->group(f
      //change password
     Route::post('/change-password',[authController::class,'passwordUpdate'])->name('change-password');
 
+    //user activity Logs
+    Route::get('user-activity',[AdminController::class,'Activity'])->name('user-activity');
 
 
 
