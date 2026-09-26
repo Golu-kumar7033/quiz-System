@@ -13,6 +13,8 @@ use Illuminate\Validation\Rules\Password;
 
 
 use  App\Models\User;
+use  App\Models\activity;
+
 use  App\Mail\varifyUser;
 
 
@@ -69,6 +71,11 @@ class authController extends Controller
         $link=url('/varifyUser/'.$link);
         Mail::to($user->email)->send(new varifyUser($link));
 
+        activity::create([
+                'user_id'=>$user->id,
+                'activity_type' => " Registered  ",
+            ]);
+
         return redirect('/login')->with('success', 'Registration successful.');
     }else{
         return redirect()->with('error', 'Registration faild!');
@@ -83,6 +90,11 @@ class authController extends Controller
         if($user){
             $user->email_verified_at=now();
             if($user->save()){
+                activity::create([
+                'user_id'=>$user->id,
+                'activity_type' => "Email Varified ",
+
+                ]);
                 return redirect('/login');
             }
         }
@@ -122,12 +134,23 @@ class authController extends Controller
 
         // Redirect based on role
         if ($user->role === 'admin') {
+             activity::create([
+                'user_id'=>Auth::id(),
+                'activity_type' => "Sign In ",
+
+            ]);
             return redirect()->route('admin.dashboard');
         }
 
         if ($user->role === 'user') {
+             activity::create([
+                'user_id'=>Auth::id(),
+                'activity_type' => "Sign In ",
+
+            ]);
             return redirect()->route('home');
         }
+       
 
         // Unknown/unauthorized role
         Auth::logout();
@@ -139,12 +162,18 @@ class authController extends Controller
     }
 
     public function logout(Request $request){
+         activity::create([
+            'user_id'=>Auth::id(),
+            'activity_type' => "Sign Out ",
+
+            ]);
 
         Auth::logout();
 
        
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+       
          return redirect()->route('login');
 
 
@@ -164,6 +193,11 @@ class authController extends Controller
         if($user){
             $user->update([
                 'password' => Hash::make($request->newpassword),
+            ]);
+            activity::create([
+                'user_id'=>Auth::id(),
+                'activity_type' => "Change Password",
+
             ]);
             return back()->with('success', 'Password changed successfully.');
 
