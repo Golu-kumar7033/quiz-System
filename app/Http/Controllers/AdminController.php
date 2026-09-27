@@ -423,5 +423,28 @@ class AdminController extends Controller
         return view('admin.user_log',compact('activities','navdata'));
     }
 
+    //global search function
+
+    public function Search(Request $request){
+
+        $query=$request->input('s');
+        $source=$request->input('sourch');
+        $navdata = quiz_categorie::with('quizzes')->get(); 
+        $users=User::where('name','LIKE',"%{$query}%")
+        ->orWhere('email','LIKE',"%{$query}%")->get();
+        return view('admin.user',compact('users','navdata'));
+
+      
+    }
+    //category search
+    function categorySearch(Request $request){
+        $query=$request->input('s');
+        $navdata = quiz_categorie::with('quizzes')->get(); 
+        $data= quiz_categorie::where('Title','LIKE',"%{$query}%")->simplePaginate(10);
+        return view('admin.quiz_category',compact('data','navdata'));
+
+
+    }
     
+      
 }

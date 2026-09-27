@@ -5,9 +5,11 @@
 <div class="main">
     <div class="top-card mt-4">
         <div class=" d-flex justify-content-end mb-3">
-            <form action="">
+            <form action="{{route('admin.search')}}" method="get">
                 <div class="d-flex justify-content-end gap-1">
-                    <input type="search" class="form-control" placeholder="search quiz..">
+                    <input type="search" name="s" class="form-control" placeholder="search.....">
+                    <input type="hidden" name="source" value="user">
+
                     <button type="submit" class="search btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>               
             </form>

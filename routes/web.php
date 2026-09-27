@@ -106,6 +106,9 @@ Route::middleware('auth','role:admin')->prefix('admin')->name('admin.')->group(f
     //user activity Logs
     Route::get('user-activity',[AdminController::class,'Activity'])->name('user-activity');
 
-
+    // search
+    Route::get('user',[AdminController::class,'Search'])->name('search');
+    Route::get('category',[AdminController::class,'categorySearch'])->name('categorySearch');
+   
 
 });
