@@ -57,7 +57,7 @@
 
 </style>
 <!-quizess->
-<div class="container">
+<div class="container-fluid">
     <div class="text-center mb-5">
         <h2> Choose a topic to begin your quiz and start learning right now.</h2>
     </div>

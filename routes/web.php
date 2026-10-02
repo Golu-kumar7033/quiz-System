@@ -14,8 +14,18 @@ use App\Http\Controllers\userController;
     Route::post('/user-signUp',[authController::class,'signUp'])->name('user-signUp');
     Route::post('/sign-In',[authController::class,'user_signIn'])->name('sign-In');
     Route::get('/logout',[authController::class,'logout'])->name('logout');
+    Route::get('/forget-password',[authController::class,'forget'])->name('forget');
+
 
     Route::get('/varifyUser/{email}',[authController::class,'varifyUser'])->name('varifyUser');
+    Route::Post('/forget',[authController::class,'forgetPassword'])->name('forget-password');
+
+    Route::get('/set-new-password/{email}',[authController::class,'Newpassword'])->name('newpassword');
+
+    Route::post('/set-new-password',[authController::class,'Setnewpassword'])->name('Set-newpassword');
+
+
+
 
     //search
     Route::get('search', [UserController::class, 'Search'])

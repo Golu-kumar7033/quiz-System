@@ -16,6 +16,11 @@ use  App\Models\User;
 use  App\Models\activity;
 
 use  App\Mail\varifyUser;
+use  App\Mail\userForgetpassword;
+use  App\Mail\changPassword;
+
+
+
 
 
 
@@ -205,6 +210,59 @@ class authController extends Controller
 
         return back()->with('error', 'Password changed Faild !.');
 
-    }     
+    }
+    
+    public function forget(){
+        return view('forget');
+    
+    } 
+
+    function forgetPassword(Request $request){
+
+        $link=Crypt::encryptString($request->email);
+        $link=url('/set-new-password/'.$link);
+        Mail::to($request->email)->send(new  userForgetpassword($link));
+        return redirect('login');
+    }
+
+    function Newpassword($email){
+        $email= Crypt::decryptString($email);
+        return view('change_password',['email'=>$email]);
+
+
+    }
+
+    function Setnewpassword(Request $request){
+        $request->validate([
+            'email'=>'required',
+            'password'=>'required', 
+            'Confirm_password' => [
+            'required', 
+            Password::min(8)->letters()->mixedCase()->numbers()->symbols(), 
+            ],
+        ]);
+
+         $user =User::where('email',$request->email)->first();
+
+        if($user){
+            $user->password = Hash::make($request->Confirm_password);
+            if($user->save()){
+                activity::create([
+                'user_id'=>$user->id,
+                'activity_type' => "Forget Password",
+
+            ]);
+
+            Mail::to($user->email)->send(new changPassword());
+
+
+            return redirect('login');
+
+            }
+
+        }     
+
+
+    }
 
 }

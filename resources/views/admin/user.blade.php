@@ -99,11 +99,6 @@
                 <h4>Users</h4>
                 <p>Manage App Users </p>
             </div>
-
-            <button class="add-category"   data-bs-toggle="modal" data-bs-target="#categoryModal">
-                <i class="fa-solid fa-plus"></i>
-                Add User
-            </button>
         </div>
 
         <div class="category-card">
@@ -149,8 +144,8 @@
 
                             <td>
                                 <div class="actions">
-                                    <a href="" class="action-btn view-btn" title="View">
-                                        <i class="fa-solid fa-eye"></i>
+                                    <a href="" class="action-btn view-btn" title="Edit">
+                                        <i class="fa-solid fa-pen"></i>
                                     </a>
 
                                     <a href="{{route('admin.delete',['type'=>'user','id'=>$user->id]) }}" class="action-btn delete-btn" title="Delete">
