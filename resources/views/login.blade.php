@@ -73,16 +73,22 @@
         </button>
 
       </form>
-          <!--
       <div class="divider">
         OR CONTINUE WITH
       </div>
 
       <div class="social-buttons">
-        <button class="social">Google</button>
-        <button class="social">GitHub</button>
+        <!--Google login-->
+        <a class="social text-center">
+          <i class="fa-brands fa-google"></i>
+          Google
+        </a>
+        <!--github login-->
+        <a href="{{route('github.login')}}"class="social text-center">
+          <i class="fa-brands fa-github"></i> 
+          GitHub
+        </a>
       </div>
-          -->
       <p class="signup">
         Don't have an account?
         <a href="{{route('signUP')}}">Create Account</a>

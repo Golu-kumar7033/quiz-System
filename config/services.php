@@ -17,6 +17,17 @@ return [
     'postmark' => [
         'key' => env('POSTMARK_API_KEY'),
     ],
+    'github' => [
+    'client_id' => env('GITHUB_CLIENT_ID'),
+    'client_secret' => env('GITHUB_CLIENT_SECRET'),
+    'redirect' => env('GITHUB_REDIRECT_URL'),
+    ],
+
+    'google' => [
+    'client_id' => env('Goole_CLIENT_ID'),
+    'client_secret' => env('Goole_CLIENT_SECRET'),
+    'redirect' => env('Goole_REDIRECT_URL'),
+    ],
 
     'resend' => [
         'key' => env('RESEND_API_KEY'),
@@ -34,5 +45,9 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    //github confic
+
+   
+
 
 ];

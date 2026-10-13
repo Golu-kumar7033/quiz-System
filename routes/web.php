@@ -4,9 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\authController;
 use App\Http\Controllers\userController;
+use App\Http\Controllers\Auth\GithubController;
 
+//github login route
+Route::get('/auth/github', [GithubController::class, 'redirect'])
+    ->name('github.login');
 
-
+Route::get('/auth/github/callback', [GithubController::class, 'callback'])
+    ->name('github.callback');
 
 /**login signin */
     Route::get('/login',[authController::class,'login'])->name('login');

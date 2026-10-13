@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'github_id',
+        'avatar',
     ];
 
         protected $table = "users";
