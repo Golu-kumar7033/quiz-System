@@ -79,7 +79,7 @@
 
       <div class="social-buttons">
         <!--Google login-->
-        <a class="social text-center">
+        <a href="{{route('google.login')}}" class="social text-center">
           <i class="fa-brands fa-google"></i>
           Google
         </a>

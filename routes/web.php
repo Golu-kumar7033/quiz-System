@@ -5,6 +5,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\authController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\Auth\GithubController;
+use App\Http\Controllers\Auth\GoolgleController;
+
 
 //github login route
 Route::get('/auth/github', [GithubController::class, 'redirect'])
@@ -12,6 +14,13 @@ Route::get('/auth/github', [GithubController::class, 'redirect'])
 
 Route::get('/auth/github/callback', [GithubController::class, 'callback'])
     ->name('github.callback');
+
+//github login route
+Route::get('/auth/google', [GoolgleController::class, 'redirect'])
+    ->name('google.login');
+
+Route::get('/auth/google/callback', [GoolgleController::class, 'callback'])
+    ->name('google.callback');
 
 /**login signin */
     Route::get('/login',[authController::class,'login'])->name('login');
