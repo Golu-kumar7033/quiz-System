@@ -503,11 +503,7 @@ a:hover {
 }
 
 /* Quiz Grid */
-.quiz-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-}
+
 
 /* Quiz Box */
 .quiz-box {
@@ -516,6 +512,7 @@ a:hover {
     border-radius: 12px;
     padding: 15px;
     transition: 0.2s;
+    margin-bottom: 20px;
 }
 
 .quiz-box:hover {
@@ -550,9 +547,9 @@ a:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #111827;
+    background: #14272c;
     border: 1px solid #273449;
-    padding: 10px 12px;
+    padding: 15px 12px;
     border-radius: 8px;
     text-decoration: none;
     color: #cbd5e1;

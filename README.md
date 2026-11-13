@@ -33,7 +33,6 @@ See Questions Attempted
 | HTML | Structure |
 | CSS | Styling |
 | Bootstrap | Responsive |
-| JavaScript | Client Side Functionality |
 | jQuery | DOM Manipulation |
 | AJAX | Asynchronous Calls |
 | PHP | Back End Programming |

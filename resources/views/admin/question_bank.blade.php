@@ -454,7 +454,33 @@
             </div>
             
     </div>
-    <div class="d-flex justify-content-center mt-4">
+
+    <style>.custom-pagination nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.custom-pagination a,
+.custom-pagination button {
+    padding: 8px 16px;
+    margin: 0 4px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    text-decoration: none;
+        background: #071127;
+
+    color: #2563eb;
+}
+
+.custom-pagination a:hover,
+.custom-pagination button:hover {
+    background: #2563eb;
+    color: #080303;
+}</style>
+    <div class="d-flex  justify-content-end  mt-4">
+        <div class="custom-pagination">
+        {{$question -> links()}}</div>
     </div>
 
         

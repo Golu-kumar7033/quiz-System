@@ -80,13 +80,23 @@
                             <h4>{{ $quiz->title ?? 'Quiz #'.$quiz->id }} <span>{{ $quiz->topics->count() }} Topics</span></h4>
                             @if( $quiz->topics->count()> 0)
 
-                                <div class="topic-list">
-                                    @foreach($quiz->topics as $topic)
-                                        <a href="{{ route('quiz.topic_quiz',['type'=>$topic->slug])}}" class="topic-item">
-                                            <span>{{ $topic->Topic }}</span>
-                                            <h6 class="badge bg-info glow-badge text-danger">Attempt</h6>
-                                        </a>
-                                    @endforeach
+                                <div class="topic-list ">
+                                    <div class="row mb-2">
+                                        @foreach($quiz->topics as $topic)
+                                            <div class="col-md-6 col-xl-6 mb-2">
+                                                <a href="{{ route('quiz.topic_quiz', ['type' => $topic->slug]) }}"
+                                                class="topic-item d-flex justify-content-between align-items-center">
+
+                                                    <span>{{ $topic->Topic }}</span>
+
+                                                    <h6 class="badge bg-info glow-badge text-danger mb-0">
+                                                        Attempt
+                                                    </h6>
+
+                                                </a>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             @else
                             <p style="text-align:center;color:#94a3b8;padding:20px;">No Quizzes Topics</p>
